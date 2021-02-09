@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,13 +24,12 @@ spec:
         command: [ "/bin/bash", "-c", "--" ]
         args: [ "while true; do sleep 10; done;" ]
       nodeName: node3
-   
-   -----
-   
-   apiVersion: apps/v1
+      
+---
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: uas
+  name: uas-deployment
   labels:
     app: uas
 spec:
@@ -50,14 +50,13 @@ spec:
         - containerPort: 5060
         command: [ "/bin/bash", "-c", "--" ]
         args: [ "while true; do sleep 10; done;" ]
-      nodeName: kubepoc1
+      nodeName: node3
 
------
-
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: uac
+  name: uac-deployment
   labels:
     app: uac
 spec:
@@ -78,6 +77,5 @@ spec:
         - containerPort: 5060
         command: [ "/bin/bash", "-c", "--" ]
         args: [ "while true; do sleep 10; done;" ]
-      nodeName: kubepoc1 
-      
- ---
+      nodeName: node3
+   
