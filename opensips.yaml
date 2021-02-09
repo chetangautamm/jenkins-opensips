@@ -23,3 +23,61 @@ spec:
         command: [ "/bin/bash", "-c", "--" ]
         args: [ "while true; do sleep 10; done;" ]
       nodeName: node3
+   
+   -----
+   
+   apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uas
+  labels:
+    app: uas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uas
+  template:
+    metadata:
+      labels:
+        app: uas
+    spec:
+      containers:
+      - name: opensips
+        image: chetangautamm/repo:SIPp
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5060
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 10; done;" ]
+      nodeName: kubepoc1
+
+-----
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uac
+  labels:
+    app: uac
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uac
+  template:
+    metadata:
+      labels:
+        app: uac
+    spec:
+      containers:
+      - name: opensips
+        image: chetangautamm/repo:SIPp
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5060
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 10; done;" ]
+      nodeName: kubepoc1 
+      
+ ---
