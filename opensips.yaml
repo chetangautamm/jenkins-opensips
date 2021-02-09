@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opensips-deployment
+  labels:
+    app: opensips
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opensips
+  template:
+    metadata:
+      labels:
+        app: opensips
+    spec:
+      containers:
+      - name: opensips
+        image: chetangautamm/repo:Opensips_Build
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5060
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 10; done;" ]
+      nodeName: node3
