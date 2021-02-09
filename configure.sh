@@ -30,4 +30,4 @@ kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/opensips sta
 kubectl exec $uas -n default -- bash -c "cd /home/sipp/sipp-3.4.1/ && ./sipp -sf uas_mod_orig.xml -rsa $opensips_ip:5060 -i $uas_ip -p 5080 > /dev/null 2> /dev/null &"
 
 #start uac
-#kubectl exec -i $uac -n default -- bash -c "cd /home/sipp/sipp-3.4.1/ && ./sipp -bg -sf uac_mod.xml $opensips_ip:5060 -trace_screen -s chetan -i $uac_ip -p 5065  -m 100 -r 10 -rp 1000"
+kubectl exec $uac -n default -- bash -c "cd /home/sipp/sipp-3.4.1/ && ./sipp -sf uac_mod.xml $opensips_ip:5060 -trace_screen -s chetan -i $uac_ip -p 5065  -m 100 -r 10 -rp 1000 > /dev/null 2> /dev/null &"
