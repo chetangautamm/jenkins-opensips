@@ -18,14 +18,17 @@ pipeline {
     
     stage('Deploy App') {
       steps {
+        sh "chmod +x configure.sh"
         sshagent(['k8suser']) {
           sh "scp opensips.yaml k8suser@52.172.221.4:/home/k8suser"
+          sh "scp configure.sh k8suser@52.172.221.4:/home/k8suser"
           script {
             try {
               sh "ssh k8suser@52.172.221.4 kubectl apply -f ."
             }catch(error){
               sh "ssh k8suser@52.172.221.4 kubectl apply -f ."
             }
+            sh "ssh k8suser@52.172.221.4 ./configure.sh"
           }
         }              
       }
