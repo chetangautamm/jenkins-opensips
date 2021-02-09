@@ -25,3 +25,9 @@ kubectl exec -i $uac -n default -- bash -c "sed -i '67 s/--> *//' /home/sipp/sip
 kubectl exec -i $opensips_server -n default -- bash -c "cd /usr/local/opensips_proxy/sbin/ && ./opensipsctl ul add chetan sip:chetan@$uas_ip:5080"
 kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/opensips restart"
 kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/opensips status"
+
+#start uas
+kubectl exec -i $uas -n default -- bash -c "/home/sipp/sipp-3.4.1/./sipp -sf uas_mod_orig.xml -rsa $opensips_ip:5060 -i $uas_ip -p 5080 "
+
+#start uac
+kubectl exec -i $uas -n default -- bash -c "/home/sipp/sipp-3.4.1/./sipp -sf uac_mod.xml $opensips_ip:5060 -s chetan -i $uac_ip -p 5065  -m 100 -r 10 -rp 1000"
