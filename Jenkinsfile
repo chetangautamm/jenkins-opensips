@@ -20,7 +20,9 @@ pipeline {
       steps {
         sh "chmod +x configure.sh"
         sshagent(['k8suser']) {
-          sh "scp opensips.yaml k8suser@52.172.221.4:/home/k8suser"
+          sh "scp pod.json k8suser@52.172.221.4:/home/k8suser"
+          sh "scp uas.json k8suser@52.172.221.4:/home/k8suser"
+          sh "scp uac.json k8suser@52.172.221.4:/home/k8suser"
           sh "scp configure.sh k8suser@52.172.221.4:/home/k8suser"
           script {
             try {
