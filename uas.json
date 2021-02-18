@@ -1,0 +1,42 @@
+{
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": {
+        "labels": {
+            "app": "uas"
+        },
+        "name": "uas-deployment",
+        "namespace": "default"
+    },
+    "spec": {
+        "replicas": 1,
+        "selector": {
+            "matchLabels": {
+                "app": "uas"
+            }
+        },
+        "template": {
+            "metadata": {
+                "labels": {
+                    "app": "uas"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "image": "chetangautamm/repo:sipp.v3",
+                        "imagePullPolicy": "Always",
+                        "name": "uas",
+                        "ports": [
+                            {
+                                "containerPort": 5060
+                            }
+                        ]
+                    }
+                ],
+                "nodeName": "node3"
+            }
+        }
+    }
+}
+
