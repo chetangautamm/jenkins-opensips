@@ -24,13 +24,13 @@ pipeline {
           sh "scp uas.json k8suser@52.172.221.4:/home/k8suser"
           sh "scp uac.json k8suser@52.172.221.4:/home/k8suser"
           sh "scp configure.sh k8suser@52.172.221.4:/home/k8suser"
-          sh "sleep 20"
           script {
             try {
               sh "ssh k8suser@52.172.221.4 kubectl create -f ."
             }catch(error){
               sh "ssh k8suser@52.172.221.4 kubectl create -f ."
             }
+            sh "sleep 20"
             sh "ssh k8suser@52.172.221.4 ./configure.sh"
           }
         }              
