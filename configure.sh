@@ -13,6 +13,11 @@ kubectl exec -i $opensips_server -n default -- bash -c "cd /usr/local/opensips_p
 kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/mysql start"
 kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/opensips start"
 
+#add user
+kubectl exec -i $opensips_server -n default -- bash -c "cd /usr/local/opensips_proxy/sbin/ && ./opensipsctl ul add chetan sip:chetan@$uas_ip:5080"
+kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/opensips restart"
+kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/opensips status"
+
 #edit uas pod
 kubectl exec -i $uas -n default -- bash -c "sed -i -e 's/172.17.0.3/($uac_ip)/g' /home/sipp/sipp-3.4.1/uas_mod_orig.xml" ;
 
@@ -21,10 +26,7 @@ kubectl exec -i $uac -n default -- bash -c "sed -i -e 's/172.16.0.10/($uas_ip)/g
 kubectl exec -i $uac -n default -- bash -c "sed -i '62 s/<!-- *//' /home/sipp/sipp-3.4.1/uac_mod.xml" ;
 kubectl exec -i $uac -n default -- bash -c "sed -i '67 s/--> *//' /home/sipp/sipp-3.4.1/uac_mod.xml"
 
-#add user
-kubectl exec -i $opensips_server -n default -- bash -c "cd /usr/local/opensips_proxy/sbin/ && ./opensipsctl ul add chetan sip:chetan@$uas_ip:5080"
-kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/opensips restart"
-kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/opensips status"
+
 
 #start uas
 #kubectl exec $uas -n default -- bash -c "cd /home/sipp/sipp-3.4.1/ && ./sipp -sf uas_mod_orig.xml -rsa $opensips_ip:5060 -i $uas_ip -p 5080 > /dev/null 2> /dev/null &"
