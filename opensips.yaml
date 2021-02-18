@@ -19,8 +19,6 @@ spec:
       - name: opensips
         image: chetangautamm/repo:Opensips_Build
         imagePullPolicy: Always
-        tty: true
-        stdin: true
         ports:
         - containerPort: 5060
         command: [ "/bin/bash", "-c", "--" ]
@@ -48,8 +46,6 @@ spec:
       - name: uas
         image: chetangautamm/repo:sipp.v3
         imagePullPolicy: Always
-        tty: true
-        stdin: true
         ports:
         - containerPort: 5060
       nodeName: node3
@@ -75,8 +71,6 @@ spec:
       - name: uas
         image: chetangautamm/repo:sipp.v3
         imagePullPolicy: Always
-        tty: true
-        stdin: true
         ports:
         - containerPort: 5060
       nodeName: node3
