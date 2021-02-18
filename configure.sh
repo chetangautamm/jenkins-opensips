@@ -28,4 +28,4 @@ kubectl exec -i $uac -n default -- bash -c "sed -i -e 's/172.16.0.10/($uas_ip)/g
 kubectl exec $uas -n default -it -- ./sipp -bg -sf uas_mod_orig.xml -rsa $opensips_ip:5060 -i $uas_ip -p 5080
 
 #start uac
-kubectl exec $uac -n default -it -- ./sipp -sf uac_mod.xml $opensips_ip:5060 -s chetan -i $uac_ip -p 5065  -m 100 -r 10 -rp 1000 
+kubectl exec $uac -n default -it -- ./sipp -bg -sf uac_mod.xml $opensips_ip:5060 -trace_screen -s chetan -i $uac_ip -p 5065  -m 100 -r 10 -rp 1000 
