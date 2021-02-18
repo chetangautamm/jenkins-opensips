@@ -1,0 +1,41 @@
+{
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": {
+        "labels": {
+            "app": "uac"
+        },
+        "name": "uac-deployment",
+        "namespace": "default"
+    },
+    "spec": {
+        "replicas": 1,
+        "selector": {
+            "matchLabels": {
+                "app": "uac"
+            }
+        },
+        "template": {
+            "metadata": {
+                "labels": {
+                    "app": "uac"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "image": "chetangautamm/repo:sipp.v3",
+                        "imagePullPolicy": "Always",
+                        "name": "uac",
+                        "ports": [
+                            {
+                                "containerPort": 5060
+                            }
+                        ]
+                    }
+                ],
+                "nodeName": "node3"
+            }
+        }
+    }
+}
