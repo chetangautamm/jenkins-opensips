@@ -68,7 +68,7 @@ spec:
         app: uac
     spec:
       containers:
-      - name: uas
+      - name: uac
         image: chetangautamm/repo:sipp.v3
         imagePullPolicy: Always
         ports:
