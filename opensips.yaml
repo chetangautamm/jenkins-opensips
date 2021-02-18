@@ -43,13 +43,11 @@ spec:
         app: uas
     spec:
       containers:
-      - name: opensips
-        image: chetangautamm/repo:SIPp
+      - name: uas
+        image: chetangautamm/repo:sipp.v3
         imagePullPolicy: Always
         ports:
         - containerPort: 5060
-        command: [ "/bin/bash", "-c", "--" ]
-        args: [ "while true; do sleep 10; done;" ]
       nodeName: node3
 
 ---
@@ -70,12 +68,10 @@ spec:
         app: uac
     spec:
       containers:
-      - name: opensips
-        image: chetangautamm/repo:SIPp
+      - name: uas
+        image: chetangautamm/repo:sipp.v3
         imagePullPolicy: Always
         ports:
         - containerPort: 5060
-        command: [ "/bin/bash", "-c", "--" ]
-        args: [ "while true; do sleep 10; done;" ]
       nodeName: node3
    
