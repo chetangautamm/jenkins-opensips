@@ -3,7 +3,7 @@
 opensips_server=$(kubectl get pods -n default -o wide | grep opensips | awk '{print $1}');
 opensips_ip=$(kubectl get pods -n default -o wide | grep opensips | awk '{print $6}');
 uas=$(kubectl get pods -n default -o wide | grep 'uas' | awk '{print $1}');
-uac=$(kubectl get pods -n default -o wide | grep 'uac' | awk '{print $1}');
+uac=$(kubectl get pods -n default -o wide | grep 'uac' | awk '{print $1}'); 
 uac_ip=$(kubectl get pods -n default -o wide | grep 'uac' | awk '{print $6}');
 uas_ip=$(kubectl get pods -n default -o wide | grep 'uas' | awk '{print $6}');
 
@@ -19,17 +19,13 @@ kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/opensips res
 kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/opensips status"
 
 #edit uas pod
-kubectl exec -i $uas -n default -- bash -c "sed -i -e 's/172.17.0.3/($uac_ip)/g' /home/sipp/sipp-3.4.1/uas_mod_orig.xml" ;
+kubectl exec -i $uas -n default -- bash -c "sed -i -e 's/172.21.112.222/($uac_ip)/g' /home/sipp/sipp-3.4.1/uas_mod_orig.xml" ;
 
 #edit uac pod
 kubectl exec -i $uac -n default -- bash -c "sed -i -e 's/172.16.0.10/($uas_ip)/g' /home/sipp/sipp-3.4.1/uac_mod.xml" ;
-kubectl exec -i $uac -n default -- bash -c "sed -i '62 s/<!-- *//' /home/sipp/sipp-3.4.1/uac_mod.xml" ;
-kubectl exec -i $uac -n default -- bash -c "sed -i '67 s/--> *//' /home/sipp/sipp-3.4.1/uac_mod.xml"
-
-
 
 #start uas
-#kubectl exec $uas -n default -- bash -c "cd /home/sipp/sipp-3.4.1/ && ./sipp -sf uas_mod_orig.xml -rsa $opensips_ip:5060 -i $uas_ip -p 5080 > /dev/null 2> /dev/null &"
+kubectl exec $uas -n default -- bash -c "cd /home/sipp/sipp-3.4.1/ && ./sipp -sf uas_mod_orig.xml -rsa $opensips_ip:5060 -i $uas_ip -p 5080"
 
 #start uac
 #kubectl exec -i $uac -n default -- bash -c "cd /home/sipp/sipp-3.4.1/ && ./sipp -sf uac_mod.xml $opensips_ip:5060 -s chetan -i $uac_ip -p 5065  -m 100 -r 10 -rp 1000 1> scen.txt 2> scen.err &"
