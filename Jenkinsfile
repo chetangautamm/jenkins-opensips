@@ -24,9 +24,9 @@ pipeline {
           sh "scp configure.sh k8suser@52.172.221.4:/home/k8suser"
           script {
             try {
-              sh "ssh k8suser@52.172.221.4 kubectl apply -f ."
+              sh "ssh k8suser@52.172.221.4 kubectl create -f ."
             }catch(error){
-              sh "ssh k8suser@52.172.221.4 kubectl apply -f ."
+              sh "ssh k8suser@52.172.221.4 kubectl create -f ."
             }
             sh "ssh k8suser@52.172.221.4 ./configure.sh"
           }
