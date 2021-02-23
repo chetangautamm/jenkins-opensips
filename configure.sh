@@ -19,13 +19,13 @@ kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/opensips res
 kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/opensips status"
 
 #edit uas pod
-kubectl exec -i $uas -n default -- bash -c "sed -i -e 's/172.21.112.222/($uac_ip)/g' /home/sipp/sipp-3.4.1/uas_mod_orig.xml && ./sipp -bg -sf uas_mod_orig.xml -rsa $opensips_ip:5060 -i $uas_ip -p 5080 " ;
+kubectl exec -i $uas -n default -- bash -c "sed -i -e 's/172.21.112.222/($uac_ip)/g' /home/sipp/sipp-3.4.1/uas_mod_orig.xml" ;
 
 #edit uac pod
-kubectl exec -i $uac -n default -- bash -c "sed -i -e 's/172.16.0.10/($uas_ip)/g' /home/sipp/sipp-3.4.1/uac_mod.xml && ./sipp -bg -sf uac_mod.xml $opensips_ip:5060 -trace_screen -s chetan -i $uac_ip -p 5065  -m 100 -r 10 -rp 1000 " ;
+kubectl exec -i $uac -n default -- bash -c "sed -i -e 's/172.16.0.10/($uas_ip)/g' /home/sipp/sipp-3.4.1/uac_mod.xml" ;
 
 #start uas
-#kubectl run $uas -n default -- ./sipp -sf uas_mod_orig.xml -rsa $opensips_ip:5060 -i $uas_ip -p 5080 
+kubectl exec -i $uac -n default -- bash -c "/home/sipp/sipp-3.4.1 && ./sipp -sf uas_mod_orig.xml -rsa $opensips_ip:5060 -i $uas_ip -p 5080 >/dev/null 2>&1 &" ; 
 
 #start uac
-#kubectl run $uac -n default -- ./sipp -sf uac_mod.xml $opensips_ip:5060 -trace_screen -s chetan -i $uac_ip -p 5065  -m 100 -r 10 -rp 1000 
+kubectl exec -i $uac -n default -- bash -c "/home/sipp/sipp-3.4.1 && ./sipp -sf uac_mod.xml $opensips_ip:5060 -trace_screen -s chetan -i $uac_ip -p 5065  -m 100 -r 10 -rp 1000 >/dev/null 2>&1 &" ; 
