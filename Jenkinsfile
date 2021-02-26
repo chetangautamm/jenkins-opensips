@@ -24,9 +24,9 @@ pipeline {
           sh "scp -o StrictHostKeyChecking=no -q configure.sh k8s-host1@192.168.1.207:/home/k8s-host1"
           script {
             try {
-              sh "ssh k8s-host1@192.168.1.207 kubectl apply -f ."
+              sh "ssh k8s-host1@192.168.1.207 kubectl apply -f opensips.yaml"
             }catch(error){
-              sh "ssh k8s-host1@192.168.1.207 kubectl apply -f ."
+              sh "ssh k8s-host1@192.168.1.207 kubectl apply -f opensips.yaml"
             }
             
             sh "ssh k8s-host1@192.168.1.207 ./configure.sh"
