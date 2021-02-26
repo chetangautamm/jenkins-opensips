@@ -26,8 +26,8 @@ kubectl exec -i $uac -n default -- bash -c "sed -i -e 's/172.16.0.10/($uas_ip)/g
 
 #start uas
 export DISPLAY=:0.0;
-gnome-terminal "kubectl exec -it $uas -n default -- bash -c 'cd /home/sipp/sipp-3.4.1 && ./sipp -sf uas_mod_orig.xml -rsa $opensips_ip:5060 -i $uas_ip -p 5080' ; "
+gnome-terminal "kubectl exec -it $uas -n default -- bash -c 'cd /home/sipp/sipp-3.4.1 && ./sipp -bg -sf uas_mod_orig.xml -rsa $opensips_ip:5060 -i $uas_ip -p 5080' ; "
 #kubectl exec -i $uac -n default -- bash -c "echo $?" ;
 #start uac
-gnome-terminal "kubectl exec -it $uac -n default -- bash -c 'cd /home/sipp/sipp-3.4.1 && ./sipp -sf uac_mod.xml $opensips_ip:5060 -trace_screen -s chetan -i $uac_ip -p 5065  -m 100 -r 10 -rp 1000' ;"
+gnome-terminal "kubectl exec -it $uac -n default -- bash -c 'cd /home/sipp/sipp-3.4.1 && ./sipp -bg -sf uac_mod.xml $opensips_ip:5060 -trace_screen -s chetan -i $uac_ip -p 5065  -m 100 -r 10 -rp 1000' ;"
 #kubectl exec -i $uac -n default -- bash -c "echo $?" ;
