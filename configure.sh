@@ -25,6 +25,7 @@ kubectl exec -i $uas -n default -- bash -c "sed -i -e 's/172.21.112.222/($uac_ip
 kubectl exec -i $uac -n default -- bash -c "sed -i -e 's/172.16.0.10/($uas_ip)/g' /home/sipp/sipp-3.4.1/uac_mod.xml" ;
 
 #start uas
+export DISPLAY=:0.0
 gnome-terminal "kubectl exec -i $uac -n default -- bash -c "cd /home/sipp/sipp-3.4.1 && ./sipp -sf uas_mod_orig.xml -rsa $opensips_ip:5060 -i $uas_ip -p 5080" ; "
 #kubectl exec -i $uac -n default -- bash -c "echo $?" ;
 #start uac
