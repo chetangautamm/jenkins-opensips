@@ -28,7 +28,7 @@ pipeline {
             }catch(error){
               sh "ssh k8s-host1@192.168.1.207 kubectl apply -f ."
             }
-            #sh "sleep 20"
+            
             sh "ssh k8s-host1@192.168.1.207 ./configure.sh"
           }
         }              
