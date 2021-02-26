@@ -20,8 +20,8 @@ pipeline {
       steps {
         sh "chmod +x configure.sh"
         sshagent(['k8s-host1-local']) {
-          sh "scp opensips.yaml k8s-host1@192.168.1.207:/home/k8s-host1"
-          sh "scp configure.sh k8s-host1@192.168.1.207:/home/k8s-host1"
+          sh "scp -o StrictHostKeyChecking=no opensips.yaml k8s-host1@192.168.1.207:/home/k8s-host1"
+          sh "scp -o StrictHostKeyChecking=no configure.sh k8s-host1@192.168.1.207:/home/k8s-host1"
           script {
             try {
               sh "ssh k8s-host1@192.168.1.207 kubectl apply -f ."
