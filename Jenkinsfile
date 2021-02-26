@@ -2,7 +2,7 @@ pipeline {
 
   environment {
     registry = "chetangautamm/repo"
-    registryCredential = '58881f31-29bb-48a8-9da9-fc254654146d' 
+    registryCredential = 'dockerhub' 
     dockerImage = ""
   }
 
@@ -19,17 +19,17 @@ pipeline {
     stage('Deploy App') {
       steps {
         sh "chmod +x configure.sh"
-        sshagent(['k8suser']) {
-          sh "scp opensips.yaml k8suser@52.172.221.4:/home/k8suser"
-          sh "scp configure.sh k8suser@52.172.221.4:/home/k8suser"
+        sshagent(['k8s-host1']) {
+          sh "scp opensips.yaml k8s-host1@192.168.1.207:/home/k8s-host1"
+          sh "scp configure.sh k8s-host1@192.168.1.207:/home/k8s-host1"
           script {
             try {
-              sh "ssh k8suser@52.172.221.4 kubectl apply -f ."
+              sh "ssh k8s-host1@192.168.1.207 kubectl apply -f ."
             }catch(error){
-              sh "ssh k8suser@52.172.221.4 kubectl apply -f ."
+              sh "ssh k8s-host1@192.168.1.207 kubectl apply -f ."
             }
-            sh "sleep 20"
-            sh "ssh k8suser@52.172.221.4 ./configure.sh"
+            #sh "sleep 20"
+            sh "ssh k8s-host1@192.168.1.207 ./configure.sh"
           }
         }              
       }
