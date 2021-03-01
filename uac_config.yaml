@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: uac-config
 data:
-  uas.xml: |
+  uac.xml: |
     <?xml version="1.0" encoding="ISO-8859-1" ?>
     <!DOCTYPE scenario SYSTEM "sipp.dtd">
 
@@ -126,6 +126,14 @@ data:
       <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/>
 
     </scenario>
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: uac-shell
+data:
+  uac.sh: |
+    ./sipp -sf uac_mod.xml OPENSIPS:5060 -s chetan -i UAC -p 5065  -m 100 -r 10 -rp 500
     
 ---
 apiVersion: apps/v1
@@ -154,9 +162,14 @@ spec:
         args: [ "while true; do sleep 10; done;" ]
         volumeMounts:
             - name: uac-xml-config
-              mountPath: /home/sipp/sipp-3.4.1/uac-config
+              mountPath: /home/sipp/sipp-3.4.1/configs
+            - name: uac-shell-config
+              mountPath: /home/sipp/sipp-3.4.1/configs
       nodeName: node3 
       volumes:
         - name: uac-xml-config
           configMap:
             name: uac-config
+        - name: uac-shell-config
+          configMap:
+            name: uac-shell
