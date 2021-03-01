@@ -1,0 +1,35 @@
+
+ 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uac-deployment
+  labels:
+    app: uac
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uac
+  template:
+    metadata:
+      labels:
+        app: uac
+    spec:
+      containers:
+      - name: uac
+        image: chetangautamm/repo:sipp.v3
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5060
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 10; done;" ]
+        volumeMounts:
+            - name: uac-xml-config
+              mountPath: /home/sipp/sipp-3.4.1/uac-config
+      nodeName: node3 
+      volumes:
+        - name: uac-xml-config
+          configMap:
+            name: uac-config
