@@ -129,6 +129,15 @@ data:
       <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/>
 
     </scenario>
+ 
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: uas-shell
+data:
+  uas.sh: |
+    ./sipp  -sf uas_mod_orig.xml -rsa OPENSIPS:5060 -i UAS  -p 5080 -m 100 
 
 ---
 apiVersion: apps/v1
@@ -153,15 +162,20 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 5060
-          command: [ "/bin/bash", "-c", "--" ]
-          args: [ "while true; do sleep 10; done;" ]
+          command: [ "/bin/bash", "-c", "--","sh" ]
+          args: [ "uas.sh;while true; do sleep 10; done;" ]
           volumeMounts:
             - name: uas_xml_config
-              mountPath: /home/sipp/sipp-3.4.1/uas-config
+              mountPath: /home/sipp/sipp-3.4.1/configs
+            - name: uas_shell_config
+              mountPath: /home/sipp/sipp-3.4.1/configs
       nodeName: node3
       volumes:
         - name: uas-xml-config
           configMap:
             name: uas-config
+        - name: uas-shell-config
+          configMap:
+            name: uas-shell
         
 
