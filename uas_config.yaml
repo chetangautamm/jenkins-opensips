@@ -129,7 +129,67 @@ data:
       <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/>
 
     </scenario>
-    
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opensips-deployment
+  labels:
+    app: opensips
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opensips
+  template:
+    metadata:
+      labels:
+        app: opensips
+    spec:
+      containers:
+      - name: opensips
+        image: chetangautamm/repo:Opensips_Build
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5060
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 10; done;" ]
+      nodeName: node3
+ 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uac-deployment
+  labels:
+    app: uac
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uac
+  template:
+    metadata:
+      labels:
+        app: uac
+    spec:
+      containers:
+      - name: uac
+        image: chetangautamm/repo:sipp.v3
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5060
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 10; done;" ]
+        volumeMounts:
+            - name: uac-xml-config
+              mountPath: /home/sipp/sipp-3.4.1/uac-config
+      nodeName: node3 
+      volumes:
+        - name: uac-xml-config
+          configMap:
+            name: uac-config
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -153,11 +213,14 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 5060
+          command: [ "/bin/bash", "-c", "--" ]
+          args: [ "while true; do sleep 10; done;" ]
           volumeMounts:
             - name: uas_xml_config
-              mountPath: /home/sipp/sipp-3.4.1/uas_mod_orig.xml
+              mountPath: /home/sipp/sipp-3.4.1/uas-config
+      nodeName: node3
       volumes:
-        - name: uas_xml_config
+        - name: uas-xml-config
           configMap:
             name: uas-config
         
