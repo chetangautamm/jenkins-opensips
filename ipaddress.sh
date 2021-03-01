@@ -9,3 +9,4 @@ uac=$uac_ip
 
 sed -i "s/172.17.0.2/$uac/g" uac_config.yaml
 sed -i "s/172.17.0.2/$uac/g" uas_config.yaml
+sed -i "s/OPENSIPS/$sip/g" uas_config.yaml
