@@ -129,4 +129,36 @@ data:
       <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/>
 
     </scenario>
+    
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uas-deployment
+  labels:
+    app: uas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uas
+  template:
+    metadata:
+      labels:
+        app: uas
+    spec:
+      containers:
+        - name: uas
+          image: chetangautamm/repo:sipp.v3
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5060
+          volumeMounts:
+            - name: uas_xml_config
+              mountPath: /home/sipp/sipp-3.4.1/uas_mod_orig.xml
+      volumes:
+        - name: uas_xml_config
+          configMap:
+            name: uas-config
+        
 
