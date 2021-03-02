@@ -34,9 +34,11 @@ pipeline {
     stage('Configure & Create UAS') {
       steps {
         sh "chmod +x ipaddress.sh"
+        sh "chmod +x run.sh"
         sshagent(['k8suser']) {
           sh "scp -o StrictHostKeyChecking=no -q uas_config.yaml k8suser@52.172.221.4:/home/k8suser"
           sh "scp -o StrictHostKeyChecking=no -q ipaddress.sh k8suser@52.172.221.4:/home/k8suser"
+          sh "scp -o StrictHostKeyChecking=no -q run.sh k8suser@52.172.221.4:/home/k8suser"
           script {
             sh "ssh k8suser@52.172.221.4 ./ipaddress.sh"
             try {
@@ -44,6 +46,7 @@ pipeline {
             }catch(error){
               sh "ssh k8suser@52.172.221.4 kubectl apply -f uas_config.yaml"
             } 
+            sh "ssh k8suser@52.172.221.4 ./run.sh"
           }
         }              
       }
