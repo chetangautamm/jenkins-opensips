@@ -24,6 +24,31 @@ spec:
         command: [ "/bin/bash", "-c", "--" ]
         args: [ "while true; do sleep 10; done;" ]
       nodeName: node3
+  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uas-deployment
+  labels:
+    app: uas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uas
+  template:
+    metadata:
+      labels:
+        app: uas
+    spec:
+      containers:
+      - name: uas
+        image: chetangautamm/repo:sipp.v3
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5060
+      nodeName: node3
       
 ---
 apiVersion: apps/v1
