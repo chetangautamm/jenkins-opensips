@@ -164,8 +164,6 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 5060
-          command: [ "sh" ]
-          args: [ "shell/uas.sh" ]
           volumeMounts:
             - name: uas-xml-config
               mountPath: /home/sipp/sipp-3.4.1/xml
