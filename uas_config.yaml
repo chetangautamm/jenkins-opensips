@@ -139,7 +139,7 @@ data:
   uas.sh: |
     #!/bin/bash
     uas=$(hostname -I | awk '{ print $1 }')
-    ./sipp  -sf configs/uas.xml -rsa OPENSIPSIP:5060 -i $uas -p 5080  
+    ./sipp  -sf config-files/uas.xml -rsa OPENSIPSIP:5060 -i $uas -p 5080  
 
 ---
 apiVersion: apps/v1
@@ -165,12 +165,12 @@ spec:
           ports:
             - containerPort: 5060
           command: [ "sh" ]
-          args: [ "configs/uas.sh" ]
+          args: [ "config-files/uas.sh" ]
           volumeMounts:
             - name: uas-xml-config
-              mountPath: /home/sipp/sipp-3.4.1/configs
+              mountPath: /home/sipp/sipp-3.4.1/config-files
             - name: uas-shell-config
-              mountPath: /home/sipp/sipp-3.4.1/configs
+              mountPath: /home/sipp/sipp-3.4.1/config-files
       nodeName: node3
       volumes:
         - name: uas-xml-config
