@@ -14,7 +14,7 @@ kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/mysql start"
 kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/opensips start"
 
 #add user
-kubectl exec -i $opensips_server -n default -- bash -c "cd /usr/local/opensips_proxy/sbin/ && ./opensipsctl ul add test sip:test@$uas_ip:5080"
+kubectl exec -i $opensips_server -n default -- bash -c "cd /usr/local/opensips_proxy/sbin/ && ./opensipsctl ul add demo sip:demo@$uas_ip:5080"
 kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/opensips restart"
 kubectl exec -i $opensips_server -n default -- bash -c "/etc/init.d/opensips status"
 
@@ -28,6 +28,6 @@ kubectl exec -i $uac -n default -- bash -c "sed -i -e 's/172.16.0.10/($uas_ip)/g
 kubectl exec -i $uas -n default -- bash -c "export TERM=xterm && ./sipp -sf uas_mod_orig.xml -rsa $opensips_ip:5060 -i $uas_ip -p 5080 " ; 
 #kubectl exec -i $uas -n default -- bash -c "echo $?" ;
 
-#start uac
-kubectl exec $uac -n default -- bash -c "export TERM=xterm && ./sipp -sf uac_mod.xml $opensips_ip:5060 -trace_screen -s test -i $uac_ip -p 5065  -m 100 -r 10 -rp 1000 &" ;
+#start ua
+kubectl exec -i $uac -n default -- bash -c "export TERM=xterm && ./sipp -sf uac_mod.xml $opensips_ip:5060 -s demo -i $uac_ip -p 5065  -m 100 -r 10 -rp 1000 " ;
 #kubectl exec -i $uac -n default -- bash -c "echo $?" ;
