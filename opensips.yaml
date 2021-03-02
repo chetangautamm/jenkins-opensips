@@ -29,31 +29,6 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: uas-deployment
-  labels:
-    app: uas
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: uas
-  template:
-    metadata:
-      labels:
-        app: uas
-    spec:
-      containers:
-      - name: uas
-        image: chetangautamm/repo:sipp.v3
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 5060
-      nodeName: node3
-
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
   name: uac-deployment
   labels:
     app: uac
