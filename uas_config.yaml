@@ -139,7 +139,7 @@ data:
   uas.sh: |
     #!/bin/bash
     uas=$(hostname -I | awk '{ print $1 }')
-    ./sipp  -sf xml/uas.xml -rsa OPENSIPSIP:5060 -i $uas -p 5080  
+    ./sipp -bg -sf xml/uas.xml -rsa OPENSIPSIP:5060 -i $uas -p 5080  
 
 ---
 apiVersion: apps/v1
