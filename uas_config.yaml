@@ -139,7 +139,7 @@ data:
   uas.sh: |
     #!/bin/bash
     uas=$(hostname -I | awk '{ print $1 }')
-    ./sipp  -sf uas.xml -rsa OPENSIPSIP:5060 -i $uas -p 5080  
+    ./sipp  -sf configs/uas.xml -rsa OPENSIPSIP:5060 -i $uas -p 5080  
 
 ---
 apiVersion: apps/v1
@@ -164,8 +164,8 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 5060
-          command: [ "/bin/bash", "-c", "--","sh" ]
-          args: [ "uas.sh;while true; do sleep 10; done;" ]
+          command: [ "sh" ]
+          args: [ "configs/uas.sh" ]
           volumeMounts:
             - name: uas_xml_config
               mountPath: /home/sipp/sipp-3.4.1/configs
