@@ -29,7 +29,6 @@ pipeline {
             }catch(error){
               sh "ssh k8suser@52.172.221.4 kubectl apply -f opensips.yaml"
             } 
-            sh "sleep 10"
             sh "ssh k8suser@52.172.221.4 ./configure.sh"
           }
         }              
