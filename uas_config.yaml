@@ -167,9 +167,9 @@ spec:
           command: [ "sh" ]
           args: [ "configs/uas.sh" ]
           volumeMounts:
-            - name: uas_xml_config
+            - name: uas-xml-config
               mountPath: /home/sipp/sipp-3.4.1/configs
-            - name: uas_shell_config
+            - name: uas-shell-config
               mountPath: /home/sipp/sipp-3.4.1/configs
       nodeName: node3
       volumes:
