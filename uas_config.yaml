@@ -169,6 +169,7 @@ spec:
               mountPath: /home/sipp/sipp-3.4.1/xml
             - name: uas-shell-config
               mountPath: /home/sipp/sipp-3.4.1/shell
+              readOnly: false
       nodeName: node3
       volumes:
         - name: uas-xml-config
