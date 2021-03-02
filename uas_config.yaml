@@ -137,7 +137,9 @@ metadata:
   name: uas-shell
 data:
   uas.sh: |
-    ./sipp  -sf uas_mod_orig.xml -rsa OPENSIPS:5060 -i UAS  -p 5080 -m 100 
+    #!/bin/bash
+    uas=$(hostname -I | awk '{ print $1 }')
+    ./sipp  -sf uas.xml -rsa OPENSIPS:5060 -i $uas -p 5080  
 
 ---
 apiVersion: apps/v1
