@@ -48,6 +48,8 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 5060
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 10; done;" ]
       nodeName: node3
       
 ---
@@ -73,5 +75,7 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 5060
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 10; done;" ]
       nodeName: node3
    
